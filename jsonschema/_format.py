@@ -243,6 +243,16 @@ def is_time(instance):
         return True
     return datetime.datetime.strptime(instance, "%H:%M:%S")
 
+@_checks_drafts("uuid4", raises=ValueError)
+def is_uuid4(instance):
+    if not isinstance(instance, str_types):
+        raise ValueError("Input is not a valid string")
+    from uuid import UUID
+
+    val = UUID(instance, version=4)
+    if str(val) != str(instance):
+        raise ValueError("Input string is not a valid UUID4")
+    return True
 
 try:
     import webcolors
